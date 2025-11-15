@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KaratasogluSurvey.MainPage"
+             Title="Анкета">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="10" Padding="20">
+
+            <Label 
+                Text="Домашнее задание: Экран анкеты"
+                FontSize="20"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Margin="0,0,0,20" />
+
+            <Label Text="1. Фамилия:" />
+            <Entry 
+                x:Name="SurnameEntry" 
+                Placeholder="Введите фамилию..." />
+
+            <Label Text="2. Имя:" />
+            <Entry 
+                x:Name="NameEntry" 
+                Placeholder="Введите имя..." />
+
+            <Label Text="3. Отчество:" />
+            <Entry 
+                x:Name="PatronymicEntry" 
+                Placeholder="Введите отчество..." />
+
+            <Label 
+                Text="{Binding AgeDisplay}" 
+                FontSize="18"
+                Margin="0,15,0,0"/>
+            <Slider 
+                x:Name="AgeSlider"
+                Minimum="0"
+                Maximum="100"
+                Value="{Binding Age}" />
+            <Stepper 
+                x:Name="AgeStepper"
+                Minimum="0"
+                Maximum="100"
+                Increment="1"
+                Value="{Binding Age}" />
+
+            <Label 
+                Text="5. Номер телефона:" 
+                Margin="0,15,0,0"/>
+            <Entry 
+                x:Name="PhoneEntry"
+                Placeholder="+7 (XXX) XXX-XX-XX"
+                Keyboard="Telephone">
+                <Entry.Style>
+                    <Style TargetType="Entry">
+                        <Setter Property="TextColor" Value="Red" />
+                        <Style.Triggers>
+                            <DataTrigger 
+                                TargetType="Entry"
+                                Binding="{Binding Source={x:Reference PhoneEntry}, Path=Text.Length}"
+                                Value="11">
+                                <Setter Property="TextColor" Value="Green" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Entry.Style>
+            </Entry>
+
+            <Label Text="6. Пол:" Margin="0,15,0,0"/>
+            <HorizontalStackLayout Spacing="10">
+                <RadioButton 
+                    x:Name="MaleRadio" 
+                    Content="Мужской" 
+                    GroupName="Gender" />
+                <RadioButton 
+                    x:Name="FemaleRadio" 
+                    Content="Женский" 
+                    GroupName="Gender" />
+            </HorizontalStackLayout>
+
+            <Label Text="7. Согласие с условиями:" Margin="0,15,0,0"/>
+            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                <Switch x:Name="TermsSwitch" />
+                <Label Text="Я согласен с условиями." VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+
+            <Button 
+                x:Name="SubmitButton"
+                Text="Отправить"
+                Margin="0,20,0,0"
+                Clicked="SubmitButton_Clicked"
+                IsEnabled="{Binding Source={x:Reference TermsSwitch}, Path=IsToggled}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
